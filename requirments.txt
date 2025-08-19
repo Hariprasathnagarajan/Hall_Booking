@@ -1,0 +1,34 @@
+needss of aproach ==>
+based on infrastructure, like board, TV=>monitor,tuch,audio, Table,chair, others
+
+**hall**
+TV
+Table
+chair
+audio
+ohers
+
+
+**slot**
+Date
+Time
+
+**Slot open**
+always
+
+**slot clode**
+Filled out 
+Maintanance
+Time Out
+=======================================================================================================
+
+**db**
+
+open or close slots
+reallotmentn of slots
+confirmation information
+feed back
+
+
+
+
