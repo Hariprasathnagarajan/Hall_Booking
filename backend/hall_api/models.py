@@ -15,16 +15,16 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.role})"
-    
-# Hall master
+
 class HallMaster(models.Model):
-    off_code = models.CharField(max_length=100)
+    office_code = models.CharField(max_length=100)
     hall_code = models.CharField(max_length=100, unique=True)
     hall_name = models.CharField(max_length=255)
-    day_spoc_name = models.CharField(max_length=255)
-    ngt_spoc_name = models.CharField(max_length=255)
+    day_spoc = models.CharField(max_length=255)
+    mid_spoc = models.CharField(max_length=255)
+    night_spoc = models.CharField(max_length=255)
     capacity = models.IntegerField()
-    tables = models.IntegerField()
+    table = models.IntegerField()
     chairs = models.IntegerField()
     white_board = models.BooleanField(default=False)
     video = models.BooleanField(default=False)
@@ -32,7 +32,17 @@ class HallMaster(models.Model):
     wifi = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.hall_name
+        return f"{self.hall_name} ({self.hall_code})"
+    
+class SessionMaster(models.Model):
+    session_code = models.CharField(max_length=100, unique=True)
+    session_type = models.CharField(max_length=100)
+    preferred_hall_1 = models.CharField(max_length=100, blank=True, null=True)
+    preferred_hall_2 = models.CharField(max_length=100, blank=True, null=True)
+    preferred_hall_3 = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.session_code} ({self.session_type})"
 
 # admin master table
 class AdminMaster(models.Model):
@@ -50,6 +60,7 @@ class AdminMaster(models.Model):
 
 # booking table
 class Booking(models.Model):
+
     book_date = models.DateField()
     time_slot = models.TimeField()
     off_code = models.CharField(max_length=100)
@@ -66,12 +77,48 @@ class Booking(models.Model):
     def __str__(self):
         return f"{self.emp_name} - {self.hall_code} on {self.book_date}"
 
+class Infrastructure(models.Model):
+    infra_code = models.CharField(max_length=100, unique=True)
+    infra_type = models.CharField(max_length=100)
+    infra_item = models.CharField(max_length=255)
+    nos_in_stock = models.CharField(max_length=100)  # Keeping as CharField per your schema
 
+    def __str__(self):
+        return f"{self.infra_code} - {self.infra_item}"
+    
 
+class Booking(models.Model):
+    book_date = models.DateField()
+    book_time = models.TimeField()
+    office = models.CharField(max_length=100)
+    hall = models.CharField(max_length=100)
+    session_type = models.CharField(max_length=100)
+    emp_code = models.CharField(max_length=100)
+    emp_name = models.CharField(max_length=255)
+    emp_email_id = models.EmailField()
+    emp_mobile_no = models.CharField(max_length=20)
+    team_name = models.CharField(max_length=255)
+    status = models.BooleanField(default=False)
+    approved = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.emp_name} - {self.hall} on {self.book_date}"
 
+class StatusDate(models.Model):
+    date = models.DateField()
+    status = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.date} - {self.status}"
+    
+class TimeSlot(models.Model):
+    time = models.TimeField()
+    slot = models.CharField(max_length=100)
+    status = models.BooleanField(default=False)
+    maintanance_status = models.BooleanField(default=False)
 
+    def  __str__(self):
+        return f"{self.slot} at {self.time}"
 
 
 
